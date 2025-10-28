@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 class MainPageLocators:
     LOGIN_BUTTON = (By.XPATH, "//button[normalize-space()='Вход и регистрация']")
     CREATE_AD_BUTTON = (By.XPATH, "//button[contains(text(), 'Разместить объявление')]")
+    ANNOUNCEMENT_ERROR_NOTICE = (By.XPATH, "//h1[text()='Чтобы разместить объявление, авторизуйтесь']")
 
 class AuthPageLocators:
     EMAIL_INPUT = (By.NAME, "email")
@@ -29,5 +30,5 @@ class CreateAdPageLocators:
     DESCRIPTION_TEXTAREA = (By.XPATH, "//textarea[@name='description']")
     PRICE_INPUT = (By.XPATH, "//input[@name='price']")
     PUBLISH_BUTTON = (By.XPATH, "//button[text()='Опубликовать']")
-    AD_TITLE_H2_TEMPLATE = "//h2[contains(text(), '{}')]"
+    AD_TITLE_H2_TEMPLATE = (By.XPATH, "//div[@class='grid_threeColumns__ldn5D']//div[@class='about']/h2")
     RIGHT_ARROW_BUTTON = (By.XPATH, "//button[@class='arrowButton arrowButton--right undefined']")
