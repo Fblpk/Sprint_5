@@ -3,14 +3,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import pytest
 from locators import MainPageLocators, AuthPageLocators, CreateAdPageLocators
+from data import REGISTERED_USER, AD_NAME, AD_DESCRIPTION, AD_PRICE
 
 class TestCreateAd:
 
-    def test_create_ad(self, driver_and_main_page, random_ad_name, existing_user):
-        driver = driver_and_main_page
+    def test_create_ad(self, driver):
 
-        login = existing_user['login']
-        password = existing_user['password']
+        login = REGISTERED_USER['login']
+        password = REGISTERED_USER['password']
 
         # Авторизация пользователя
         WebDriverWait(driver, 3).until(EC.element_to_be_clickable(MainPageLocators.LOGIN_BUTTON)).click()
@@ -25,7 +25,7 @@ class TestCreateAd:
         driver.execute_script("arguments[0].scrollIntoView();", publish_button)
 
         # Ввод названия объявления
-        driver.find_element(*CreateAdPageLocators.NAME_INPUT).send_keys(random_ad_name)
+        driver.find_element(*CreateAdPageLocators.NAME_INPUT).send_keys(AD_NAME)
 
         # Выбор категории
         driver.find_element(*CreateAdPageLocators.CATEGORY_DROPDOWN_BUTTON).click()
@@ -39,10 +39,10 @@ class TestCreateAd:
         driver.find_element(*CreateAdPageLocators.CITY_OPTION_SPB).click()
 
         # Ввод описания
-        driver.find_element(*CreateAdPageLocators.DESCRIPTION_TEXTAREA).send_keys("Инженерное чудо без единого чипа!")
+        driver.find_element(*CreateAdPageLocators.DESCRIPTION_TEXTAREA).send_keys(AD_DESCRIPTION)
 
         # Ввод цены
-        driver.find_element(*CreateAdPageLocators.PRICE_INPUT).send_keys("6999")
+        driver.find_element(*CreateAdPageLocators.PRICE_INPUT).send_keys(AD_PRICE)
 
         # Публикация объявления
         driver.find_element(*CreateAdPageLocators.PUBLISH_BUTTON).click()
@@ -57,10 +57,5 @@ class TestCreateAd:
         right_arrow_button = driver.find_element(*CreateAdPageLocators.RIGHT_ARROW_BUTTON)
         driver.execute_script("arguments[0].scrollIntoView();", right_arrow_button)
 
-        # Локатор, соответствующий названию объявления
-        ad_title_locator = (By.XPATH, f"//h2[contains(text(), '{random_ad_name}')]")
-        ad_title_text = WebDriverWait(driver, 15).until(
-            EC.presence_of_element_located(ad_title_locator)
-        ).text
 
-        assert ad_title_text == random_ad_name, "Название объявления не совпадает"
+        assert driver.find_element(*CreateAdPageLocators.AD_TITLE_H2_TEMPLATE).text == AD_NAME, "Название объявления не совпадает"

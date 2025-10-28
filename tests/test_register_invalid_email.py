@@ -1,21 +1,20 @@
 import pytest
+from data import USER_WITH_INCORRECT_LOGIN
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators import MainPageLocators, AuthPageLocators
 
-class TestRegistrationErrors:
+class TestUserRegistration:
 
-    def test_registration_without_mail_domain(self, driver_and_main_page):
-        driver = driver_and_main_page
+    def test_registration_without_mail_domain(self, driver):
         wait = WebDriverWait(driver, 10)
 
         wait.until(EC.element_to_be_clickable(MainPageLocators.LOGIN_BUTTON)).click()
 
         wait.until(EC.element_to_be_clickable(AuthPageLocators.NO_ACCOUNT_BUTTON)).click()
 
-
-        login = 'dimka-2002'
-        password = '12345678'
+        login = USER_WITH_INCORRECT_LOGIN['login']
+        password = USER_WITH_INCORRECT_LOGIN['password']
         email_input = wait.until(EC.visibility_of_element_located(AuthPageLocators.EMAIL_INPUT))
         email_input.send_keys(login)
         password_input = wait.until(EC.visibility_of_element_located(AuthPageLocators.PASSWORD_INPUT))

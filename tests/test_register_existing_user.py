@@ -2,11 +2,11 @@ import pytest
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators import MainPageLocators, AuthPageLocators
+from data import REGISTERED_USER
 
-class TestRegistrationErrors:
+class TestUserRegistration:
 
-    def test_registration_existing_user(self, driver_and_main_page, existing_user):
-        driver = driver_and_main_page
+    def test_registration_existing_user(self, driver):
         wait = WebDriverWait(driver, 10)
 
         wait.until(EC.element_to_be_clickable(MainPageLocators.LOGIN_BUTTON)).click()
@@ -14,8 +14,8 @@ class TestRegistrationErrors:
         wait.until(EC.element_to_be_clickable(AuthPageLocators.NO_ACCOUNT_BUTTON)).click()
 
 
-        login = existing_user['login']
-        password = existing_user['password']
+        login = REGISTERED_USER['login']
+        password = REGISTERED_USER['password']
         email_input = wait.until(EC.visibility_of_element_located(AuthPageLocators.EMAIL_INPUT))
         email_input.send_keys(login)
         password_input = wait.until(EC.visibility_of_element_located(AuthPageLocators.PASSWORD_INPUT))

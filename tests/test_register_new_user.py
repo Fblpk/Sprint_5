@@ -3,11 +3,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators import MainPageLocators, AuthPageLocators
+from helpers import RANDOM_EMAL
 
 class TestUserRegistration:
 
-    def test_registration(self, driver_and_main_page, random_email):
-        driver = driver_and_main_page
+    def test_registration(self, driver):
         wait = WebDriverWait(driver, 10)
 
         # Открываем форму входа/регистрации
@@ -17,7 +17,7 @@ class TestUserRegistration:
         wait.until(EC.element_to_be_clickable(AuthPageLocators.NO_ACCOUNT_BUTTON)).click()
 
         # Ввод данных
-        login = random_email
+        login = RANDOM_EMAL
         password = "12345678"
         wait.until(EC.visibility_of_element_located(AuthPageLocators.EMAIL_INPUT)).send_keys(login)
         driver.find_element(*AuthPageLocators.PASSWORD_INPUT).send_keys(password)
@@ -31,5 +31,5 @@ class TestUserRegistration:
         user_name = wait.until(EC.visibility_of_element_located(AuthPageLocators.USER_NAME_H3))
 
         # Ассерты
-        assert avatar.is_displayed() == True, "Аватар пользователя не отображается"
-        assert user_name.is_displayed() == True, "Имя пользователя не отображается"
+        assert avatar.is_displayed(), "Аватар пользователя не отображается"
+        assert user_name.is_displayed(), "Имя пользователя не отображается"

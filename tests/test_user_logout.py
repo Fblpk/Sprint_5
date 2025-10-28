@@ -2,15 +2,15 @@ import pytest
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators import MainPageLocators, AuthPageLocators
+from data import REGISTERED_USER
 
 class TestLogoutUser:
 
-    def test_logout_user(self, driver_and_main_page, existing_user):
-        driver = driver_and_main_page
+    def test_logout_user(self, driver):
         wait = WebDriverWait(driver, 10)
 
-        login = existing_user['login']
-        password = existing_user['password']
+        login = REGISTERED_USER['login']
+        password = REGISTERED_USER['password']
         wait.until(EC.element_to_be_clickable(MainPageLocators.LOGIN_BUTTON)).click()
         driver.find_element(*AuthPageLocators.EMAIL_INPUT).send_keys(login)
         driver.find_element(*AuthPageLocators.PASSWORD_INPUT).send_keys(password)
@@ -32,4 +32,3 @@ class TestLogoutUser:
 
         actual_login_button_visible = bool(driver.find_elements(*MainPageLocators.LOGIN_BUTTON))
         assert actual_login_button_visible == True, "Кнопка 'Вход и регистрация' не отображается после выхода"
-
