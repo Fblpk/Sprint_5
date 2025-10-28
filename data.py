@@ -1,4 +1,4 @@
-REGISTERED_USER = {'login': 'qwwwwww@bk.ru',
+REGISTERED_USER = {'login': 'moxifloxi@inbox.ru',
                    'password': '1287975'}
 
 USER_WITH_INCORRECT_LOGIN = {'login': 'dimka-2002',
